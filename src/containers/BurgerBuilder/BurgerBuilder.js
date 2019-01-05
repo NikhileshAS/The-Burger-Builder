@@ -5,6 +5,8 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import ErrorHandler from "../../hoc/withErrorHandler/WithErrorHandler";
 
 const IngredientPrices = {
   salad: 5,
@@ -12,7 +14,7 @@ const IngredientPrices = {
   meat: 40,
   bacon: 7
 };
-export default class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
   state = {
     ingredients: {
       salad: 0,
@@ -22,7 +24,8 @@ export default class BurgerBuilder extends Component {
     },
     totalPrice: 4,
     purchasable: false,
-    purchasing: false
+    purchasing: false,
+    loading: false
   };
 
   addIngredientHandler = type => {
@@ -82,6 +85,7 @@ export default class BurgerBuilder extends Component {
   };
 
   confirmOrderHandler = () => {
+    this.setState({ loading: true });
     const order = {
       ingredients: this.state.ingredients,
       price: this.state.totalPrice,
@@ -98,17 +102,30 @@ export default class BurgerBuilder extends Component {
       deliveryMethod: "fastest"
     };
     axios
-      .post("/orders.json", order)
+      .post("/orders", order)
       .then(response => {
-        console.log(response);
+        this.setState({ loading: false, purchasing: false });
       })
       .catch(error => {
-        console.log(error);
+        this.setState({ loading: false, purchasing: false });
+        console.error(error);
       });
   };
 
   render() {
     let ingredients = { ...this.state.ingredients };
+    let OrderSummaryJSX = (
+      <OrderSummary
+        totalPrice={this.state.totalPrice}
+        confirmOrder={this.confirmOrderHandler}
+        ingredients={this.state.ingredients}
+        cancelOrder={this.cancelPurchaseHandler}
+      />
+    );
+
+    if (this.state.loading) {
+      OrderSummaryJSX = <Spinner />;
+    }
     // let style = this.state.purchasing
     //   ? { transform: "translateY(0)", opacity: "1" }
     //   : { transform: "translateY(-100vh)", opacity: "0" };
@@ -118,12 +135,7 @@ export default class BurgerBuilder extends Component {
           show={this.state.purchasing}
           modalClosed={this.cancelPurchaseHandler}
         >
-          <OrderSummary
-            totalPrice={this.state.totalPrice}
-            confirmOrder={this.confirmOrderHandler}
-            ingredients={this.state.ingredients}
-            cancelOrder={this.cancelPurchaseHandler}
-          />
+          {OrderSummaryJSX}
         </Modal>
 
         <Burger ingredients={ingredients} />
@@ -139,3 +151,5 @@ export default class BurgerBuilder extends Component {
     );
   }
 }
+
+export default ErrorHandler(BurgerBuilder, axios);
