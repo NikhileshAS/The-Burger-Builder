@@ -5,7 +5,7 @@ import Aux from "../Auxilliary";
 const ErrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
     state = { error: null };
-    componentDidMount() {
+    componentWillMount() {
       axios.interceptors.request.use(request => {
         this.setState({ error: null });
         return request;
@@ -29,7 +29,7 @@ const ErrorHandler = (WrappedComponent, axios) => {
           >
             {this.state.error ? this.state.error.message : null}
           </Modal>
-          <WrappedComponent {...this.props} />
+          <WrappedComponent />
         </Aux>
       );
     }
