@@ -24,7 +24,7 @@ class BurgerBuilder extends Component {
     error: false
   };
   componentDidMount() {
-    console.log("Component Did Mount BurgerBuilder");
+    // console.log("Component Did Mount BurgerBuilder");
     axios
       .get("https://react-burger-builder-db5bd.firebaseio.com/ingredients.json")
       .then(response => {
