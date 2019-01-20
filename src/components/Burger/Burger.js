@@ -1,12 +1,16 @@
 import React from "react";
 import classes from "./Burger.css";
+import { withRouter } from "react-router-dom";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 const Burger = props => {
+  console.log(props);
+
   let ingredients = Object.keys(props.ingredients)
     .map(igKey => {
       // console.log(igKey);
+      // console.log([...Array(props.ingredients[igKey])]);initialize empty array of the size specified
       return [...Array(props.ingredients[igKey])].map((_, index) => {
-        //   console.log(_);
+        // console.log(_);
         return <BurgerIngredient key={igKey + index} type={igKey} />;
       });
     })
@@ -24,4 +28,4 @@ const Burger = props => {
     </div>
   );
 };
-export default Burger;
+export default withRouter(Burger);

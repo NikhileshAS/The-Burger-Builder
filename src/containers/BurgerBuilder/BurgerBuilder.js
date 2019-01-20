@@ -7,6 +7,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import ErrorHandler from "../../hoc/withErrorHandler/WithErrorHandler";
+// import { withRouter } from "react-router-dom";
 
 const IngredientPrices = {
   salad: 5,
@@ -24,7 +25,8 @@ class BurgerBuilder extends Component {
     error: false
   };
   componentDidMount() {
-    // console.log("Component Did Mount BurgerBuilder");
+    console.log(this.props);
+
     axios
       .get("/ingredients.json")
       .then(response => {
@@ -116,9 +118,11 @@ class BurgerBuilder extends Component {
         this.setState({ loading: false, purchasing: false });
         console.error(error);
       });
+    // this.props.history.push("/checkout");
   };
 
   render() {
+    // console.log(this.props);
     let ingredients = { ...this.state.ingredients };
     let OrderSummaryJSX = "";
     if (this.state.loading || !this.state.ingredients) {
