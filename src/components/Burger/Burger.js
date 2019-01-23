@@ -3,7 +3,7 @@ import classes from "./Burger.css";
 import { withRouter } from "react-router-dom";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 const Burger = props => {
-  console.log(props);
+  // console.log(props);
 
   let ingredients = Object.keys(props.ingredients)
     .map(igKey => {
