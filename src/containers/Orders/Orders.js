@@ -25,7 +25,7 @@ class Orders extends Component {
 
   render() {
     const orders = [];
-    this.state.orders.map((order, index) => {
+    return this.state.orders.map((order, index) => {
       // console.log(order);
       if (
         order[0] !== undefined ||
@@ -34,8 +34,8 @@ class Orders extends Component {
       ) {
         orders.push(<Order key={index} ingredients={order} />);
       }
+      return <div>{orders}</div>;
     });
-    return <div>{orders}</div>;
   }
 }
 export default ErrorHandler(Orders, axios);
