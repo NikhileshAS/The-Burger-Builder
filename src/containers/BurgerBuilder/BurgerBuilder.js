@@ -11,13 +11,6 @@ import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 // import { withRouter } from "react-router-dom";
 
-const IngredientPrices = {
-  salad: 5,
-  cheese: 4,
-  meat: 40,
-  bacon: 7
-};
-
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
@@ -25,7 +18,7 @@ class BurgerBuilder extends Component {
     error: false
   };
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
 
     axios
       .get("/ingredients.json")
@@ -47,38 +40,38 @@ class BurgerBuilder extends Component {
   //   });
   // };
 
-  removeIngredientHandler = type => {
-    const newIngredients = [...this.props.ingredients];
-    newIngredients[type] = this.state.ingredients[type] - 1;
-    let purchasable = false;
+  // removeIngredientHandler = type => {
+  //   const newIngredients = [...this.props.ingredients];
+  //   newIngredients[type] = this.state.ingredients[type] - 1;
+  //   let purchasable = false;
 
-    let newTotalPrice = this.state.totalPrice - IngredientPrices[type];
+  //   let newTotalPrice = this.state.totalPrice - IngredientPrices[type];
 
-    newIngredients[type] = newIngredients[type] <= 0 ? 0 : newIngredients[type];
+  //   newIngredients[type] = newIngredients[type] <= 0 ? 0 : newIngredients[type];
 
-    // for (type in newIngredients) {
-    //   if (newIngredients[type] !== 0) {
-    //     purchasable = true;
-    //     break;
-    //   }
-    // }
+  //   // for (type in newIngredients) {
+  //   //   if (newIngredients[type] !== 0) {
+  //   //     purchasable = true;
+  //   //     break;
+  //   //   }
+  //   // }
 
-    const totalIngredients = Object.keys(newIngredients)
-      .map(igKey => {
-        return newIngredients[igKey];
-      })
-      .reduce((e1, e2) => {
-        return e1 + e2;
-      }, 0);
-    // console.log(arrayOfIngredientValues);
+  //   const totalIngredients = Object.keys(newIngredients)
+  //     .map(igKey => {
+  //       return newIngredients[igKey];
+  //     })
+  //     .reduce((e1, e2) => {
+  //       return e1 + e2;
+  //     }, 0);
+  //   // console.log(arrayOfIngredientValues);
 
-    purchasable = totalIngredients === 0 ? false : true;
-    this.setState({
-      ingredients: newIngredients,
-      // totalPrice: newTotalPrice,
-      purchasable: purchasable
-    });
-  };
+  //   purchasable = totalIngredients === 0 ? false : true;
+  //   this.setState({
+  //     ingredients: newIngredients,
+  //     // totalPrice: newTotalPrice,
+  //     purchasable: purchasable
+  //   });
+  // };
 
   purchaseHandler = () => {
     this.setState({
@@ -93,20 +86,19 @@ class BurgerBuilder extends Component {
   };
 
   confirmOrderHandler = () => {
-    let queryParams = [];
-    queryParams.push("price=" + this.state.totalPrice);
-    for (let i in this.props.ingredients) {
-      queryParams.push(
-        encodeURIComponent(i) +
-          "=" +
-          encodeURIComponent(this.props.ingredients[i])
-      );
-    }
+    // let queryParams = [];
+    // queryParams.push("price=" + this.props.totalPrice);
+    // for (let i in this.props.ingredients) {
+    //   queryParams.push(
+    //     encodeURIComponent(i) +
+    //       "=" +
+    //       encodeURIComponent(this.props.ingredients[i])
+    //   );
+    // }
 
-    const queryString = queryParams.join("&");
+    // const queryString = queryParams.join("&");
     this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + queryString
+      pathname: "/checkout"
     });
   };
 
