@@ -20,3 +20,23 @@ export const fetchIngredients = () => {
         dispatch(fetchIngredientsFailure());
       });
 };
+
+export const orderPlaced = () => {
+  return { type: actionTypes.ORDER_PLACED };
+};
+
+export const placeOrder = order => {
+  return dispatch =>
+    axios
+      .post("/orders.json", order)
+      .then(response => {
+        this.setState({ loading: false });
+        // console.log(this.state, this.props);
+
+        this.props.history.push({ pathname: "/" });
+      })
+      .catch(error => {
+        this.setState({ loading: false });
+        console.error(error);
+      });
+};

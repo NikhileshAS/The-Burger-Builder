@@ -1,4 +1,4 @@
-import * as actions from "./actions";
+import * as actions from "../actions";
 
 const IngredientPrices = {
   salad: 5,
@@ -7,12 +7,20 @@ const IngredientPrices = {
   bacon: 7
 };
 
-const initialState = { ingredients: [], totalPrice: 4, purchasable: false };
+const initialState = {
+  ingredients: [],
+  totalPrice: 4,
+  purchasable: false
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.FETCH_INGREDIENT_SUCCESS:
-      return { ...state, ingredients: action.payload };
+      return {
+        ...state,
+        ingredients: action.payload,
+        totalPrice: 4
+      };
 
     case actions.ADD_INGREDIENT:
       let addedIngredient = { ...state.ingredients };
