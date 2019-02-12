@@ -9,6 +9,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import ErrorHandler from "../../hoc/withErrorHandler/WithErrorHandler";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
+import { fetchIngredients } from "../../redux/actions/burgerBuilder";
 // import { withRouter } from "react-router-dom";
 
 class BurgerBuilder extends Component {
@@ -18,16 +19,8 @@ class BurgerBuilder extends Component {
     error: false
   };
   componentDidMount() {
-    // console.log(this.props);
-
-    axios
-      .get("/ingredients.json")
-      .then(response => {
-        this.props.fetchIngredients(response.data);
-      })
-      .catch(error => {
-        this.setState({ error: true });
-      });
+    console.log(this.props);
+    this.props.fetchIngredients();
   }
   // addIngredientHandler = type => {
   //   const newIngredients = { ...this.props.ingredients };
@@ -167,8 +160,7 @@ const mapDispatchToProps = dispatch => {
       dispatch({ type: actions.ADD_INGREDIENT, payload: item }),
     removeIngredient: item =>
       dispatch({ type: actions.REMOVE_INGREDIENT, payload: item }),
-    fetchIngredients: item =>
-      dispatch({ type: actions.FETCH_INGREDIENT, payload: item })
+    fetchIngredients: () => dispatch(fetchIngredients())
   };
 };
 export default connect(

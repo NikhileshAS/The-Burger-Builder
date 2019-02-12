@@ -11,7 +11,7 @@ const initialState = { ingredients: [], totalPrice: 4, purchasable: false };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.FETCH_INGREDIENT:
+    case actions.FETCH_INGREDIENT_SUCCESS:
       return { ...state, ingredients: action.payload };
 
     case actions.ADD_INGREDIENT:
@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case actions.REMOVE_INGREDIENT:
-      let removeIngredient = [...state.ingredients];
+      let removeIngredient = { ...state.ingredients };
       removeIngredient[action.payload] = removeIngredient[action.payload] - 1;
       const deducedPrice = state.totalPrice - IngredientPrices[action.payload];
       return {
