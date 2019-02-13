@@ -9,3 +9,8 @@ export const INITIATE_ORDER = "INITIATE_ORDER";
 
 export const FETCH_ORDERS = "FETCH_ORDERS";
 export const ORDERS_LOADING = "ORDERS_LOADING";
+
+export const AUTH_START = "AUTH_START";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_FAILURE = "AUTH_FAIL";
+export const AUTH_LOGOUT = "AUTH_LOGOUT";

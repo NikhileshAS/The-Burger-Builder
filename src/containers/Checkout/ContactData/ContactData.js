@@ -9,7 +9,6 @@ import { placeOrder, initiateOrder } from "../../../redux/actions/order";
 
 class ContactData extends Component {
   state = {
-    loading: false,
     isFormValid: false,
     orderForm: {
       name: {
@@ -116,7 +115,7 @@ class ContactData extends Component {
       orderData: formData
     };
 
-    this.props.onPurchaseBurger(order);
+    this.props.onPurchaseBurger(order, this.props.token);
     this.props.history.push("/");
   };
   render() {
@@ -154,14 +153,14 @@ class ContactData extends Component {
 }
 
 const mapStateToProps = state => {
-  return { loading: state.order.loading };
+  return { loading: state.order.loading, token: state.auth.token };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onInitiatePurchase: () => dispatch(initiateOrder),
-    onPurchaseBurger: order => {
-      dispatch(placeOrder(order));
+    onPurchaseBurger: (order, token) => {
+      dispatch(placeOrder(order, token));
     }
   };
 };

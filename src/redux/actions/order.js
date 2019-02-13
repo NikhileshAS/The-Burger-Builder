@@ -11,10 +11,10 @@ export const orderFailed = () => {
 export const initiateOrder = () => {
   return { type: actions.INITIATE_ORDER };
 };
-export const placeOrder = order => {
+export const placeOrder = (order, token) => {
   return dispatch => {
     axios
-      .post("/orders.json", order)
+      .post("/orders.json?auth=" + token, order)
       .then(response => dispatch(orderPlaced()))
       .catch(error => dispatch(orderFailed()));
   };
@@ -36,11 +36,14 @@ export const prepareOrders = data => {
   };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = token => {
   return dispatch => {
     axios
-      .get("/orders.json")
-      .then(response => dispatch(prepareOrders(response.data)))
+      .get("/orders.json?auth=" + token)
+      .then(response => {
+        console.log(response);
+        dispatch(prepareOrders(response.data));
+      })
       .catch(error => console.log(error));
   };
 };
